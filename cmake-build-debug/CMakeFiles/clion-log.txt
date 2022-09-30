@@ -1,7 +1,10 @@
-"C:\Users\student\AppData\Local\JetBrains\CLion 2022.2.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" -S C:\Users\student\CLionProjects\asd5 -B C:\Users\student\CLionProjects\asd5\cmake-build-debug
-CMake Error at CMakeLists.txt:11 (add_subdirectory):
-  add_subdirectory given source "tests" which is not an existing directory.
-
-
--- Configuring incomplete, errors occurred!
-See also "C:/Users/student/CLionProjects/asd5/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+"D:\Programms\CLion 2021.3.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=D:/Programms/CLion 2021.3.3/bin/ninja/win/ninja.exe" -G Ninja D:\Programming\List
+-- The C compiler identification is GNU 11.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: D:/Programms/CLion 2021.3.3/bin/mingw/bin/gcc.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: D:/Programming/List/cmake-build-debug

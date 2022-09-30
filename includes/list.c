@@ -9,19 +9,20 @@ list createEmptyList() {
 }
 
 bool isEmpty(list l) {
-    return l.size;
+    return size(l) == 0;
 }
 
 void pushBack(list *l, int value) {
-    node n = createNodeWithValue(value);
-    if (!isEmpty(*l)) {
+    if (isEmpty(*l)) {
+        node n = createNodeWithValue(value);
         l->begin = &n;
-        tieNode(l->begin, l->begin);
+        l->end = &n;
     } else {
+        node n = createNodeWithValue(value);
         tieNode(l->end, &n);
+        l->end = &n;
     }
 
-    l->end = &n;
     l->size++;
 }
 
@@ -53,12 +54,14 @@ void outputList(list l) {
 }
 
 void pushFront(list *l, int value) {
-    node next = createNodeWithValue(value);
-    if (isEmpty(*l))
-        l->end = &next;
-
-    tieNode(&next, l->begin);
-    l->begin = &next;
+    node n = createNodeWithValue(value);
+    if (isEmpty(*l)) {
+        l->begin = &n;
+        l->end = &n;
+    } else {
+        tieNode(&n, l->begin);
+        l->begin = &n;
+    }
 
     l->size++;
 }
@@ -144,4 +147,24 @@ list createNodeFromArray(int *a, size_t n) {
     }
 
     return l;
+}
+
+bool isEqualLists(list l1, list l2) {
+    if (size(l1) != size(l2))
+        return false;
+
+    node nodeL1 = *(l1.begin);
+    node nodeL2 = *(l2.begin);
+
+    size_t n = size(l1);
+    while (n > 0) {
+        if (nodeL1.value != nodeL2.value)
+            return false;
+
+        nodeL1 = nextNode(nodeL1);
+        nodeL2 = nextNode(nodeL2);
+        n--;
+    }
+
+    return true;
 }

@@ -1,6 +1,6 @@
-C:/Users/student/CLionProjects/asd5/cmake-build-debug/CMakeFiles/List.dir
-C:/Users/student/CLionProjects/asd5/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/student/CLionProjects/asd5/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/student/CLionProjects/asd5/cmake-build-debug/includes/CMakeFiles/includes.dir
-C:/Users/student/CLionProjects/asd5/cmake-build-debug/includes/CMakeFiles/edit_cache.dir
-C:/Users/student/CLionProjects/asd5/cmake-build-debug/includes/CMakeFiles/rebuild_cache.dir
+D:/Programming/List/cmake-build-debug/CMakeFiles/List.dir
+D:/Programming/List/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Programming/List/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/Programming/List/cmake-build-debug/includes/CMakeFiles/includes.dir
+D:/Programming/List/cmake-build-debug/includes/CMakeFiles/edit_cache.dir
+D:/Programming/List/cmake-build-debug/includes/CMakeFiles/rebuild_cache.dir

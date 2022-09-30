@@ -1,3 +1,22 @@
 # ninja log v5
 1	641	6861721003806961	CMakeFiles/List.dir/main.c.obj	f434b84d76884769
 643	1266	6861721010041137	List.exe	8877d7f681ac9e08
+29	1000	6862464419104365	includes/CMakeFiles/includes.dir/node.c.obj	d59ed4bf938ecbce
+32	1042	6862464419854363	includes/CMakeFiles/includes.dir/testList.c.obj	1fd386572d2ffae4
+25	1051	6862464419754367	includes/CMakeFiles/includes.dir/list.c.obj	fdfa0d943f229b53
+36	1052	6862464419834367	includes/CMakeFiles/includes.dir/testNode.c.obj	ad0399c9f44edf94
+3	1067	6862464419924378	CMakeFiles/List.dir/main.c.obj	f434b84d76884769
+1052	1539	6862464425198226	includes/libincludes.a	16391ffe150d0dfc
+1539	2053	6862464430270523	List.exe	91d7dc9f7232645b
+3	300	6862465507094446	includes/CMakeFiles/includes.dir/list.c.obj	fdfa0d943f229b53
+301	701	6862465511104500	includes/libincludes.a	16391ffe150d0dfc
+702	1253	6862465516354447	List.exe	91d7dc9f7232645b
+2	473	6862473709901963	includes/CMakeFiles/includes.dir/list.c.obj	fdfa0d943f229b53
+474	960	6862473714731938	includes/libincludes.a	16391ffe150d0dfc
+960	1364	6862473718741938	List.exe	91d7dc9f7232645b
+3	222	6862473795789846	includes/CMakeFiles/includes.dir/list.c.obj	fdfa0d943f229b53
+223	380	6862473797479370	includes/libincludes.a	16391ffe150d0dfc
+380	541	6862473799019314	List.exe	91d7dc9f7232645b
+3	341	6862485018469827	includes/CMakeFiles/includes.dir/list.c.obj	fdfa0d943f229b53
+342	670	6862485021119822	includes/libincludes.a	16391ffe150d0dfc
+671	1009	6862485025079866	List.exe	91d7dc9f7232645b
