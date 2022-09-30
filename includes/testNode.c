@@ -7,80 +7,75 @@
 
 void test_createEmptyNode() {
     // Arrange
-    node actual;
+    node *actual = NULL;
     node expected = {0, NULL};
 
     // Act
     actual = createEmptyNode();
 
     // Asserts
-    assert(actual.value == expected.value);
-    assert(actual.next == expected.next);
+    assert(actual->value == expected.value);
+    assert(actual->next == expected.next);
+
+    freeNode(actual);
 }
 
 void test_createNodeWithValue() {
     // Arrange
-    node actual;
+    node *actual = NULL;
     node expected = {42, NULL};
 
     // Act
     actual = createNodeWithValue(42);
 
     // Asserts
-    assert(actual.value == expected.value);
-    assert(actual.next == expected.next);
+    assert(actual->value == expected.value);
+    assert(actual->next == expected.next);
+
+    freeNode(actual);
 }
 
 void test_setValue() {
     // Arrange
-    node actual = createEmptyNode();
+    node *actual = createEmptyNode();
     node expected = {10, NULL};
 
     // Act
-    setValue(&actual, 10);
+    setValue(actual, 10);
 
     // Asserts
-    assert(actual.value == expected.value);
-    assert(actual.next == expected.next);
+    assert(actual->value == expected.value);
+    assert(actual->next == expected.next);
+
+    freeNode(actual);
 }
 
 void test_getValue() {
     // Arrange
-    node actual = createNodeWithValue(42);
+    node *actual = createNodeWithValue(42);
     node expected = {42, NULL};
 
     // Act
-    int value = getValue(actual);
+    int value = getValue(*actual);
 
     // Asserts
     assert(value == expected.value);
-}
 
-void test_freeNode() {
-    // Arrange
-    node actual = createNodeWithValue(42);
-    node expected = {42, NULL};
-
-    // Act
-    freeNode(&actual);
-
-    // Asserts
-    assert(actual.value == expected.value);
-    assert(actual.next == expected.next);
+    free(actual);
 }
 
 void test_tieToNode() {
     // Arrange
     node n = {42, NULL};
-    node actual = createNodeWithValue(42);
+    node *actual = createNodeWithValue(42);
     node expected = {42, &n};
 
     // Act
-    tieNode(&actual, &n);
+    tieNext(actual, &n);
 
     // Asserts
-    assert(actual.value == expected.value);
-    assert(actual.next == expected.next);
+    assert(actual->value == expected.value);
+    assert(actual->next->value == expected.next->value);
 }
 
 void test_nextNode() {
@@ -114,7 +109,6 @@ void test_node() {
     test_setValue();
     test_createNodeWithValue();
     test_tieToNode();
-    test_freeNode();
     test_getValue();
     test_nextNode();
     test_getLinkValue();

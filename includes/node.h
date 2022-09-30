@@ -6,6 +6,7 @@
 #define LIST_NODE_H
 
 #include <stdio.h>
+#include <malloc.h>
 
 typedef struct node {
     int value;
@@ -22,12 +23,12 @@ node *nextLinkNode(node n);
 
 node nextNode(node n);
 
-void tieNode(node *current, node *other);
+void tieNext(node *current, node *other);
 
 void freeNode(node *n);
 
-node createEmptyNode();
+node* createEmptyNode();
 
-node createNodeWithValue(int value);
+node* createNodeWithValue(int value);
 
 #endif //LIST_NODE_H

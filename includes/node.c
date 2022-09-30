@@ -8,7 +8,8 @@ node *nextLinkNode(node n) {
     return n.next;
 }
 
-void tieNode(node *current, node *other) {
+void tieNext(node *current, node *other) {
+    free(current->next);
     current->next = other;
 }
 
@@ -25,17 +26,30 @@ node nextNode(node n) {
 }
 
 void freeNode(node *n) {
-    n->next = NULL;
+    if (n->next != NULL)
+        free(n->next);
+
+    free(n);
 }
 
-node createEmptyNode() {
-    return (node) {0, NULL};
+node *createEmptyNode() {
+    return createNodeWithValue(0);
 }
 
 void setValue(node *n, int value) {
     n->value = value;
 }
 
-node createNodeWithValue(int value) {
-    return (node) {value, NULL};
+node *createNodeWithValue(int value) {
+    node *n = (node *) malloc(sizeof(node));
+    n->value = value;
+    n->next = NULL;
+
+    int *a = (int *) malloc(4);
+    if (n == NULL) {
+        fprintf(stderr, "bad alloc");
+        exit(2);
+    }
+
+    return n;
 }

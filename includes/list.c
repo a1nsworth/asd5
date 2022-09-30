@@ -13,14 +13,13 @@ bool isEmpty(list l) {
 }
 
 void pushBack(list *l, int value) {
+    node *n = createNodeWithValue(value);
     if (isEmpty(*l)) {
-        node n = createNodeWithValue(value);
-        l->begin = &n;
-        l->end = &n;
+        l->begin = n;
+        l->end = n;
     } else {
-        node n = createNodeWithValue(value);
-        tieNode(l->end, &n);
-        l->end = &n;
+        tieNext(l->end, n);
+        l->end = n;
     }
 
     l->size++;
@@ -54,13 +53,13 @@ void outputList(list l) {
 }
 
 void pushFront(list *l, int value) {
-    node n = createNodeWithValue(value);
+    node *n = createNodeWithValue(value);
     if (isEmpty(*l)) {
-        l->begin = &n;
-        l->end = &n;
+        l->begin = n;
+        l->end = n;
     } else {
-        tieNode(&n, l->begin);
-        l->begin = &n;
+        n->next = &(*(l->begin));
+        l->end = n;
     }
 
     l->size++;
@@ -100,10 +99,14 @@ void add(list *l, int value, size_t position) {
     } else {
         node *last = getLinkNode(*l, position - 1);
         node *next = getLinkNode(*l, position + 1);
-        node current = createNodeWithValue(value);
+        node *current = createNodeWithValue(value);
 
-        tieNode(last, &current);
-        tieNode(&current, next);
+        tieNext(last, current);
+        tieNext(current, next);
+
+        free(last);
+        free(next);
+        free(current);
 
         l->size++;
     }
@@ -123,7 +126,16 @@ node *getLinkNode(list l, size_t position) {
 }
 
 void freeList(list *l) {
-    l->begin = NULL;
+    if (!isEmpty(*l)) {
+        for (register int position = size(*l) - 1; position >= 0; --position) {
+            node *n = getLinkNode(*l, position);
+            freeNode(n);
+        }
+    } else {
+        freeNode(l->begin);
+        freeNode(l->end);
+    }
+
     l->size = 0;
 }
 
@@ -138,6 +150,8 @@ void copyList(list *l1, list *l2) {
         x = nextLinkNode(*x);
         n--;
     }
+
+    free(x);
 }
 
 list createNodeFromArray(int *a, size_t n) {
@@ -161,8 +175,11 @@ bool isEqualLists(list l1, list l2) {
         if (nodeL1.value != nodeL2.value)
             return false;
 
-        nodeL1 = nextNode(nodeL1);
-        nodeL2 = nextNode(nodeL2);
+        if (n != 0) {
+            nodeL1 = nextNode(nodeL1);
+            nodeL2 = nextNode(nodeL2);
+        }
+
         n--;
     }
 
