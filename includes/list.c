@@ -48,7 +48,7 @@ void outputList(list l) {
     for (register size_t i = 0; i < size(l); ++i) {
         printf("%d", getValue(n));
 
-        n = *(n.next);
+        n = nextNode(n);
     }
 }
 
@@ -58,8 +58,8 @@ void pushFront(list *l, int value) {
         l->begin = n;
         l->end = n;
     } else {
-        n->next = &(*(l->begin));
-        l->end = n;
+        n->next = l->begin;
+        l->begin = n;
     }
 
     l->size++;
@@ -98,15 +98,11 @@ void add(list *l, int value, size_t position) {
         pushBack(l, value);
     } else {
         node *last = getLinkNode(*l, position - 1);
-        node *next = getLinkNode(*l, position + 1);
+        node *next = getLinkNode(*l, position);
         node *current = createNodeWithValue(value);
 
         tieNext(last, current);
         tieNext(current, next);
-
-        free(last);
-        free(next);
-        free(current);
 
         l->size++;
     }
@@ -117,7 +113,7 @@ node *getLinkNode(list l, size_t position) {
 
     node *n = l.begin;
     while (position > 0) {
-        n = nextLinkNode(*n);
+        n = n->next;
 
         position--;
     }
@@ -129,11 +125,8 @@ void freeList(list *l) {
     if (!isEmpty(*l)) {
         for (register int position = size(*l) - 1; position >= 0; --position) {
             node *n = getLinkNode(*l, position);
-            freeNode(n);
+            free(n);
         }
-    } else {
-        freeNode(l->begin);
-        freeNode(l->end);
     }
 
     l->size = 0;
@@ -141,17 +134,18 @@ void freeList(list *l) {
 
 void copyList(list *l1, list *l2) {
     size_t n = size(*l2);
-    node *x = l1->begin;
+    node *valueToAppend = l2->begin;
 
-    freeList(l1);
+    if (!isEmpty(*l1))
+        freeList(l1);
     while (n > 0) {
-        pushBack(l1, x->value);
+        pushBack(l1, valueToAppend->value);
 
-        x = nextLinkNode(*x);
+        valueToAppend = nextLinkNode(*valueToAppend);
         n--;
     }
 
-    free(x);
+    free(valueToAppend);
 }
 
 list createNodeFromArray(int *a, size_t n) {
@@ -170,18 +164,44 @@ bool isEqualLists(list l1, list l2) {
     node nodeL1 = *(l1.begin);
     node nodeL2 = *(l2.begin);
 
-    size_t n = size(l1);
-    while (n > 0) {
+    for (register size_t i = 0; i < size(l1); ++i) {
         if (nodeL1.value != nodeL2.value)
             return false;
 
-        if (n != 0) {
+        if (i + 1 != size(l1)) {
             nodeL1 = nextNode(nodeL1);
             nodeL2 = nextNode(nodeL2);
         }
-
-        n--;
     }
 
     return true;
 }
+
+list constructPolynomial(list l1, list l2) {
+    list polynomial = createEmptyList();
+
+    node currentForList1 = *(l1.begin);
+    node currentForList2 = *(l2.begin);
+
+    size_t sizeL1 = size(l1);
+    size_t sizeL2 = size(l2);
+    size_t n = sizeL1 > sizeL2 ? sizeL1 : sizeL2;
+    for (register size_t i = 0; i < n; ++i) {
+        int value = 0;
+
+        if (sizeL1 >= i + 1)
+            value += currentForList1.value;
+        if (sizeL2 >= i + 1)
+            value += currentForList2.value;
+
+        pushBack(&polynomial, value);
+
+        if (currentForList1.next != NULL)
+            currentForList1 = nextNode(currentForList1);
+        if (currentForList2.next != NULL)
+            currentForList2 = nextNode(currentForList2);
+    }
+
+    return polynomial;
+}
+

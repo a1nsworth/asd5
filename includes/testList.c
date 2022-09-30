@@ -136,10 +136,143 @@ void test_isEqualLists() {
     freeList(&expected);
 }
 
+void test_add_begin() {
+    // Arrange
+    list actual = createNodeFromArray((int[]) {2, 3, 4, 5}, 4);
+    list expected = createNodeFromArray((int[]) {1, 2, 3, 4, 5}, 5);
+
+    // Act
+    add(&actual, 1, 0);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+}
+
+void test_add_end() {
+    // Arrange
+    list actual = createNodeFromArray((int[]) {1, 2, 3, 4}, 4);
+    list expected = createNodeFromArray((int[]) {1, 2, 3, 4, 5}, 5);
+
+    // Act
+    add(&actual, 5, 4);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+}
+
+void test_add_center() {
+    // Arrange
+    list actual = createNodeFromArray((int[]) {1, 2, 4, 5}, 4);
+    list expected = createNodeFromArray((int[]) {1, 2, 3, 4, 5}, 5);
+
+    // Act
+    add(&actual, 3, 2);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+}
+
+void test_add() {
+    test_add_end();
+    test_add_begin();
+    test_add_center();
+}
+
+void test_copyList() {
+    // Arrange
+    list actual;
+    list listForCopy = createNodeFromArray((int[]) {1, 2, 3, 4, 5}, 5);
+    list expected = createNodeFromArray((int[]) {1, 2, 3, 4, 5}, 5);
+
+    // Act
+    copyList(&actual, &listForCopy);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+}
+
+void test_constructPolynomial_1() {
+    // Arrange
+    list p1 = createNodeFromArray((int[]) {1, 2, 3, 4, 5}, 5);
+    list p2 = createNodeFromArray((int[]) {1, 2, 3, 4, 5}, 5);
+    list expected = createNodeFromArray((int[]) {2, 4, 6, 8, 10}, 5);
+    list actual;
+
+    // Act
+    actual = constructPolynomial(p1, p2);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+    freeList(&p1);
+    freeList(&p2);
+}
+
+void test_constructPolynomial_2() {
+    // Arrange
+    list p1 = createNodeFromArray((int[]) {1, 2, 3, 4}, 4);
+    list p2 = createNodeFromArray((int[]) {1, 2, 3, 4, 5}, 5);
+    list expected = createNodeFromArray((int[]) {2, 4, 6, 8, 5}, 5);
+    list actual;
+
+    // Act
+    actual = constructPolynomial(p1, p2);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+    freeList(&p1);
+    freeList(&p2);
+}
+
+void test_constructPolynomial_3() {
+    // Arrange
+    list p1 = createNodeFromArray((int[]) {1}, 1);
+    list p2 = createNodeFromArray((int[]) {1, 2, 3, 4, 5}, 5);
+    list expected = createNodeFromArray((int[]) {2, 2, 3, 4, 5}, 5);
+    list actual;
+
+    // Act
+    actual = constructPolynomial(p1, p2);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+    freeList(&p1);
+    freeList(&p2);
+}
+
+void test_constructPolynomial() {
+    test_constructPolynomial_1();
+    test_constructPolynomial_2();
+    test_constructPolynomial_3();
+}
+
 void test_list() {
     test_createEmptyList();
     test_pushBack();
     test_getNode();
     test_isEqualLists();
-    //test_createFromArray();
+    test_createFromArray();
+    test_add();
+    test_copyList();
+    test_constructPolynomial();
 }

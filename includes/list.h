@@ -49,4 +49,6 @@ list createNodeFromArray(int *a, size_t n);
 
 bool isEqualLists(list l1, list l2);
 
+list constructPolynomial(list l1, list l2);
+
 #endif //LIST_LIST_H

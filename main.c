@@ -3,8 +3,8 @@
 
 
 int main() {
-    //test_node();
-   test_list();
+    test_node();
+    test_list();
 
     return 0;
 }
