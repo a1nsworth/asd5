@@ -22,7 +22,7 @@ node *nextLinkNode(node n);
 
 node nextNode(node n);
 
-void tieToNode(node *current, node *other);
+void tieNode(node *current, node *other);
 
 void freeNode(node *n);
 

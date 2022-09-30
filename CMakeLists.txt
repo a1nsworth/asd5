@@ -7,3 +7,4 @@ add_executable(List main.c)
 
 add_subdirectory(includes)
 target_link_libraries(List includes)
+

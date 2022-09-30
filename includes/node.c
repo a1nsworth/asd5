@@ -8,7 +8,7 @@ node *nextLinkNode(node n) {
     return n.next;
 }
 
-void tieToNode(node *current, node *other) {
+void tieNode(node *current, node *other) {
     current->next = other;
 }
 

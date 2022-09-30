@@ -39,7 +39,12 @@ node getNode(list l, size_t position);
 
 node *getLinkNode(list l, size_t position);
 
-
 void add(list *l, int value, size_t position);
+
+void freeList(list *l);
+
+void copyList(list *l1, list *l2);
+
+list createNodeFromArray(int *a, size_t n);
 
 #endif //LIST_LIST_H

@@ -13,13 +13,15 @@ bool isEmpty(list l) {
 }
 
 void pushBack(list *l, int value) {
-    node next = createNodeWithValue(value);
-    if (isEmpty(*l))
-        l->begin = &next;
+    node n = createNodeWithValue(value);
+    if (!isEmpty(*l)) {
+        l->begin = &n;
+        tieNode(l->begin, l->begin);
+    } else {
+        tieNode(l->end, &n);
+    }
 
-    tieToNode(l->end, &next);
-    l->end = &next;
-
+    l->end = &n;
     l->size++;
 }
 
@@ -55,7 +57,7 @@ void pushFront(list *l, int value) {
     if (isEmpty(*l))
         l->end = &next;
 
-    tieToNode(&next, l->begin);
+    tieNode(&next, l->begin);
     l->begin = &next;
 
     l->size++;
@@ -97,8 +99,8 @@ void add(list *l, int value, size_t position) {
         node *next = getLinkNode(*l, position + 1);
         node current = createNodeWithValue(value);
 
-        tieToNode(last, &current);
-        tieToNode(&current, next);
+        tieNode(last, &current);
+        tieNode(&current, next);
 
         l->size++;
     }
@@ -109,10 +111,37 @@ node *getLinkNode(list l, size_t position) {
 
     node *n = l.begin;
     while (position > 0) {
-        n = n->next;
+        n = nextLinkNode(*n);
 
         position--;
     }
 
     return n;
+}
+
+void freeList(list *l) {
+    l->begin = NULL;
+    l->size = 0;
+}
+
+void copyList(list *l1, list *l2) {
+    size_t n = size(*l2);
+    node *x = l1->begin;
+
+    freeList(l1);
+    while (n > 0) {
+        pushBack(l1, x->value);
+
+        x = nextLinkNode(*x);
+        n--;
+    }
+}
+
+list createNodeFromArray(int *a, size_t n) {
+    list l = createEmptyList();
+    for (register size_t i = 0; i < n; ++i) {
+        pushBack(&l, a[i]);
+    }
+
+    return l;
 }
