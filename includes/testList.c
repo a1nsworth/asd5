@@ -226,7 +226,7 @@ void test_constructPolynomial_2() {
     // Arrange
     list p1 = createNodeFromArray((int[]) {1, 2, 3, 4}, 4);
     list p2 = createNodeFromArray((int[]) {1, 2, 3, 4, 5}, 5);
-    list expected = createNodeFromArray((int[]) {2, 4, 6, 8, 5}, 5);
+    list expected = createNodeFromArray((int[]) {1, 3, 5, 7, 9}, 5);
     list actual;
 
     // Act
@@ -245,7 +245,7 @@ void test_constructPolynomial_3() {
     // Arrange
     list p1 = createNodeFromArray((int[]) {1}, 1);
     list p2 = createNodeFromArray((int[]) {1, 2, 3, 4, 5}, 5);
-    list expected = createNodeFromArray((int[]) {2, 2, 3, 4, 5}, 5);
+    list expected = createNodeFromArray((int[]) {1, 2, 3, 4, 6}, 5);
     list actual;
 
     // Act
@@ -266,6 +266,172 @@ void test_constructPolynomial() {
     test_constructPolynomial_3();
 }
 
+void test_popBack_oneElement() {
+    // Arrange
+    list actual = createNodeFromArray((int[]) {42}, 1);
+    list expected = {NULL, NULL, 0};
+
+    // Act
+    popBack(&actual);
+
+    // Asserts
+    assert(actual.begin == expected.begin);
+    assert(actual.end == expected.end);
+    assert(actual.size == actual.size);
+}
+
+void test_popBack_notOneElement() {
+    // Arrange
+    list actual = createNodeFromArray((int[]) {1, 2, 3, 4, 5, 6, 7}, 7);
+    list expected = createNodeFromArray((int[]) {1, 2, 3, 4, 5, 6}, 6);
+
+    // Act
+    popBack(&actual);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+}
+
+void test_popBack() {
+    test_popBack_oneElement();
+    test_popBack_notOneElement();
+}
+
+void test_popFront_oneElement() {
+    // Arrange
+    list actual = createNodeFromArray((int[]) {42}, 1);
+    list expected = {NULL, NULL, 0};
+
+    // Act
+    popFront(&actual);
+
+    // Asserts
+    assert(actual.begin == expected.begin);
+    assert(actual.end == expected.end);
+    assert(actual.size == actual.size);
+}
+
+void test_popFront_notOneElement() {
+    // Arrange
+    list actual = createNodeFromArray((int[]) {1, 2, 3, 4, 5, 6, 7}, 7);
+    list expected = createNodeFromArray((int[]) {1, 2, 3, 4, 5, 6}, 6);
+
+    // Act
+    popBack(&actual);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+}
+
+void test_popFront() {
+    test_popFront_oneElement();
+    test_popFront_notOneElement();
+}
+
+void test_pop_oneElement() {
+    // Arrange
+    list actual = createNodeFromArray((int[]) {42}, 1);
+    list expected = {NULL, NULL, 0};
+
+    // Act
+    pop(&actual, 0);
+
+    // Asserts
+    assert(actual.begin == expected.begin);
+    assert(actual.end == expected.end);
+    assert(size(actual) == size(expected));
+}
+
+void test_pop_last() {
+    // Arrange
+    list actual = createNodeFromArray((int[]) {1, 2, 3, 4, 5, 6, 7, 8}, 8);
+    list expected = createNodeFromArray((int[]) {1, 2, 3, 4, 5, 6, 7}, 7);
+
+    // Act
+    pop(&actual, 7);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+}
+
+void test_pop_begin() {
+    // Arrange
+    list actual = createNodeFromArray((int[]) {1, 2, 3, 4, 5, 6, 7, 8}, 8);
+    list expected = createNodeFromArray((int[]) {2, 3, 4, 5, 6, 7, 8}, 7);
+
+    // Act
+    pop(&actual, 0);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+}
+
+void test_pop_preLast() {
+    // Arrange
+    list actual = createNodeFromArray((int[]) {1, 2, 3, 4, 5, 6, 7, 8}, 8);
+    list expected = createNodeFromArray((int[]) {1, 2, 3, 4, 5, 6, 8}, 7);
+
+    // Act
+    pop(&actual, 6);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+}
+
+void test_pop_nextBegin() {
+    // Arrange
+    list actual = createNodeFromArray((int[]) {1, 2, 3, 4, 5, 6, 7, 8}, 8);
+    list expected = createNodeFromArray((int[]) {1, 3, 4, 5, 6, 7, 8}, 7);
+
+    // Act
+    pop(&actual, 1);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+}
+
+void test_pop_middle() {
+    // Arrange
+    list actual = createNodeFromArray((int[]) {1, 2, 3, 42, 5, 6, 7, 8}, 8);
+    list expected = createNodeFromArray((int[]) {1, 2, 3, 5, 6, 7, 8}, 7);
+
+    // Act
+    pop(&actual, 3);
+
+    // Asserts
+    assert(isEqualLists(actual, expected));
+
+    freeList(&actual);
+    freeList(&expected);
+}
+
+void test_pop() {
+    test_pop_oneElement();
+    test_pop_last();
+    test_pop_begin();
+    test_pop_preLast();
+    test_pop_nextBegin();
+    test_pop_middle();
+}
+
 void test_list() {
     test_createEmptyList();
     test_pushBack();
@@ -275,4 +441,7 @@ void test_list() {
     test_add();
     test_copyList();
     test_constructPolynomial();
+    test_popBack();
+    test_popFront();
+    test_pop();
 }

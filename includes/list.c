@@ -29,10 +29,6 @@ size_t size(list l) {
     return l.size;
 }
 
-node *next(list *l) {
-    return nextLinkNode(*(l->begin));
-}
-
 void inputList(list *l, size_t n) {
     while (n > 0) {
         int value;
@@ -44,11 +40,14 @@ void inputList(list *l, size_t n) {
 }
 
 void outputList(list l) {
-    node n = *(l.begin);
-    for (register size_t i = 0; i < size(l); ++i) {
-        printf("%d", getValue(n));
+    if (!isEmpty(l)) {
+        node *current = l.begin;
+        for (register size_t i = 0; i < size(l); ++i) {
+            printf("%d", getValue(*current));
 
-        n = nextNode(n);
+            if (current->next != NULL)
+                current = current->next;
+        }
     }
 }
 
@@ -161,6 +160,9 @@ bool isEqualLists(list l1, list l2) {
     if (size(l1) != size(l2))
         return false;
 
+    if (isEmpty(l1) && isEmpty(l2))
+        return true;
+
     node nodeL1 = *(l1.begin);
     node nodeL2 = *(l2.begin);
 
@@ -178,30 +180,127 @@ bool isEqualLists(list l1, list l2) {
 }
 
 list constructPolynomial(list l1, list l2) {
-    list polynomial = createEmptyList();
+    typedef struct tuple {
+        size_t item1;
+        size_t item2;
+    } tuple;
 
+    list polynomial = createEmptyList();
     node currentForList1 = *(l1.begin);
     node currentForList2 = *(l2.begin);
 
     size_t sizeL1 = size(l1);
     size_t sizeL2 = size(l2);
-    size_t n = sizeL1 > sizeL2 ? sizeL1 : sizeL2;
-    for (register size_t i = 0; i < n; ++i) {
+    tuple max = {sizeL1 > sizeL2 ? 1 : 2, sizeL1 > sizeL2 ? sizeL1 : sizeL2};
+    tuple min = {sizeL1 > sizeL2 ? 2 : 1, sizeL1 > sizeL2 ? sizeL2 : sizeL1};
+    for (register size_t i = 0; i < max.item2; ++i) {
         int value = 0;
+        if (max.item2 - i <= min.item2) {
+            value += getValue(currentForList1) + getValue(currentForList2);
 
-        if (sizeL1 >= i + 1)
-            value += currentForList1.value;
-        if (sizeL2 >= i + 1)
-            value += currentForList2.value;
+            if (currentForList1.next != NULL)
+                currentForList1 = nextNode(currentForList1);
+            if (currentForList2.next != NULL)
+                currentForList2 = nextNode(currentForList2);
+        } else if (max.item1 == 1) {
+            value += getValue(currentForList1);
+
+            if (currentForList1.next != NULL)
+                currentForList1 = nextNode(currentForList1);
+        } else if (max.item1 == 2) {
+            value += getValue(currentForList2);
+
+            if (currentForList2.next != NULL)
+                currentForList2 = nextNode(currentForList2);
+        }
 
         pushBack(&polynomial, value);
-
-        if (currentForList1.next != NULL)
-            currentForList1 = nextNode(currentForList1);
-        if (currentForList2.next != NULL)
-            currentForList2 = nextNode(currentForList2);
     }
 
     return polynomial;
+}
+
+void pop(list *l, size_t position) {
+    assert(position < size(*l));
+
+    if (!isEmpty(*l)) {
+        if (position == 0) {
+            popFront(l);
+        } else if (position == size(*l) - 1) {
+            popBack(l);
+        } else {
+            node *last = getLinkNode(*l, position - 1);
+            node *nodeForPop = last->next;
+            node *next = nodeForPop->next;
+
+            free(nodeForPop);
+            last->next = next;
+
+            l->size--;
+        }
+    }
+}
+
+node getBack(list l) {
+    return *(l.end);
+}
+
+node getFront(list l) {
+    return *(l.begin);
+}
+
+node *getLinkBack(list l) {
+    return l.end;
+}
+
+node *getLinkFront(list l) {
+    return l.begin;
+}
+
+void popFront(list *l) {
+    if (!isEmpty(*l)) {
+        if (size(*l) > 1) {
+            free(l->begin);
+            l->begin = getLinkNode(*l, 1);
+        } else {
+            free(l->begin);
+            l->begin = NULL;
+            l->end = NULL;
+        }
+
+        l->size--;
+    }
+}
+
+void popBack(list *l) {
+    if (!isEmpty(*l)) {
+        if (size(*l) > 1) {
+            free(l->end);
+            l->end = getLinkNode(*l, size(*l) - 2);
+        } else {
+            free(l->begin);
+            l->begin = NULL;
+            l->end = NULL;
+        }
+
+        l->size--;
+    }
+}
+
+void outputPolynomial(list l) {
+    if (!isEmpty(l)) {
+        node *current = l.begin;
+        for (register size_t i = 0; i < size(l); ++i) {
+            int value = getValue(*current);
+            if (value != 0)
+                printf("(%dx^%d)", value, size(l) - i - 1);
+            if (i + 1 != size(l) && value != 0)
+                printf("%c", '+');
+
+            if (current->next != NULL)
+                current = current->next;
+        }
+        printf("\b");
+    }
 }
 

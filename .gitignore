@@ -92,7 +92,7 @@ fabric.properties
 
 # Libraries
 *.lib
-*.a
+*.item1
 *.la
 *.lo
 

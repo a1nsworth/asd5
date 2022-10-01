@@ -29,8 +29,6 @@ void pushFront(list *l, int value);
 
 void inputList(list *l, size_t n);
 
-node *next(list *l);
-
 void outputList(list l);
 
 int getElement(list l, size_t position);
@@ -50,5 +48,21 @@ list createNodeFromArray(int *a, size_t n);
 bool isEqualLists(list l1, list l2);
 
 list constructPolynomial(list l1, list l2);
+
+void popBack(list *l);
+
+void popFront(list *l);
+
+node *getLinkFront(list l);
+
+node *getLinkBack(list l);
+
+node getFront(list l);
+
+node getBack(list l);
+
+void pop(list *l, size_t position);
+
+void outputPolynomial(list l);
 
 #endif //LIST_LIST_H
