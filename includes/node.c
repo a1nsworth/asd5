@@ -33,17 +33,27 @@ void freeNode(node *n) {
 }
 
 node *createEmptyNode() {
-    return createNodeWithValue(0);
+    return createNodeWithValueAndKey('0', 0);
 }
 
 void setValue(node *n, int value) {
     n->value = value;
 }
 
-node *createNodeWithValue(int value) {
+node *createNodeWithValueAndKey(char key, int value) {
     node *n = (node *) malloc(sizeof(node));
     n->value = value;
+    n->key = key;
     n->next = NULL;
 
     return n;
+}
+
+void setKey(node *n, char key) {
+    assert(n != NULL);
+    n->key = key;
+}
+
+char getKey(node n) {
+    return n.key;
 }

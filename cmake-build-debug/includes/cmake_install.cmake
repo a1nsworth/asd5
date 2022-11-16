@@ -1,4 +1,4 @@
-# Install script for directory: D:/Programming/List/includes
+# Install script for directory: C:/Users/xed22/CLionProjects/asd5/includes
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,6 +34,6 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "D:/Programms/CLion 2021.3.3/bin/mingw/bin/objdump.exe")
+  set(CMAKE_OBJDUMP "D:/Programs/CLion 2022.2.4/bin/mingw/bin/objdump.exe")
 endif()
 

@@ -26,7 +26,7 @@ void test_createNodeWithValue() {
     node expected = {42, NULL};
 
     // Act
-    actual = createNodeWithValue(42);
+    actual = createNodeWithValueAndKey(42);
 
     // Asserts
     assert(actual->value == expected.value);
@@ -52,7 +52,7 @@ void test_setValue() {
 
 void test_getValue() {
     // Arrange
-    node *actual = createNodeWithValue(42);
+    node *actual = createNodeWithValueAndKey(42);
     node expected = {42, NULL};
 
     // Act
@@ -67,7 +67,7 @@ void test_getValue() {
 void test_tieToNode() {
     // Arrange
     node n = {42, NULL};
-    node *actual = createNodeWithValue(42);
+    node *actual = createNodeWithValueAndKey(42);
     node expected = {42, &n};
 
     // Act

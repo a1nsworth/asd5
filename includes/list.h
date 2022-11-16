@@ -23,9 +23,9 @@ size_t size(list l);
 
 list createEmptyList();
 
-void pushBack(list *l, int value);
+void pushBack(list *l, char key, int value);
 
-void pushFront(list *l, int value);
+void pushFront(list *l, char key, int value);
 
 void inputList(list *l, size_t n);
 
@@ -37,7 +37,7 @@ node getNode(list l, size_t position);
 
 node *getLinkNode(list l, size_t position);
 
-void add(list *l, int value, size_t position);
+void add(list *l, char key, int value, size_t position);
 
 void freeList(list *l);
 

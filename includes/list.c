@@ -12,8 +12,8 @@ bool isEmpty(list l) {
     return size(l) == 0;
 }
 
-void pushBack(list *l, int value) {
-    node *n = createNodeWithValue(value);
+void pushBack(list *l, char key, int value) {
+    node *n = createNodeWithValueAndKey(key, value);
     if (isEmpty(*l)) {
         l->begin = n;
         l->end = n;
@@ -32,8 +32,9 @@ size_t size(list l) {
 void inputList(list *l, size_t n) {
     while (n > 0) {
         int value;
-        scanf("%d", &value);
-        pushBack(l, value);
+        char key;
+        scanf("%c %d", &key, &value);
+        pushBack(l, key, value);
 
         n--;
     }
@@ -43,7 +44,7 @@ void outputList(list l) {
     if (!isEmpty(l)) {
         node *current = l.begin;
         for (register size_t i = 0; i < size(l); ++i) {
-            printf("%d", getValue(*current));
+            printf("%c | %d", getKey(*current), getValue(*current));
 
             if (current->next != NULL)
                 current = current->next;
@@ -51,8 +52,8 @@ void outputList(list l) {
     }
 }
 
-void pushFront(list *l, int value) {
-    node *n = createNodeWithValue(value);
+void pushFront(list *l, char key, int value) {
+    node *n = createNodeWithValueAndKey(key, value);
     if (isEmpty(*l)) {
         l->begin = n;
         l->end = n;
@@ -90,15 +91,15 @@ node getNode(list l, size_t position) {
     return n;
 }
 
-void add(list *l, int value, size_t position) {
+void add(list *l, char key, int value, size_t position) {
     if (position == 0) {
-        pushFront(l, value);
+        pushFront(l, key, value);
     } else if (position == size(*l)) {
-        pushBack(l, value);
+        pushBack(l, key, value);
     } else {
         node *last = getLinkNode(*l, position - 1);
         node *next = getLinkNode(*l, position);
-        node *current = createNodeWithValue(value);
+        node *current = createNodeWithValueAndKey(key, value);
 
         tieNext(last, current);
         tieNext(current, next);
@@ -138,7 +139,7 @@ void copyList(list *l1, list *l2) {
     if (!isEmpty(*l1))
         freeList(l1);
     while (n > 0) {
-        pushBack(l1, valueToAppend->value);
+        pushBack(l1, valueToAppend->key, valueToAppend->value);
 
         valueToAppend = nextLinkNode(*valueToAppend);
         n--;
@@ -148,12 +149,12 @@ void copyList(list *l1, list *l2) {
 }
 
 list createNodeFromArray(int *a, size_t n) {
-    list l = createEmptyList();
-    for (register size_t i = 0; i < n; ++i) {
-        pushBack(&l, a[i]);
-    }
-
-    return l;
+//    list l = createEmptyList();
+//    for (register size_t i = 0; i < n; ++i) {
+//        pushBack(&l, a[i]);
+//    }
+//
+//    return l;
 }
 
 bool isEqualLists(list l1, list l2) {
@@ -214,7 +215,7 @@ list constructPolynomial(list l1, list l2) {
                 currentForList2 = nextNode(currentForList2);
         }
 
-        pushBack(&polynomial, value);
+        //pushBack(&polynomial, value);
     }
 
     return polynomial;
